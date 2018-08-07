@@ -46,7 +46,7 @@ class DegreeCourseDetailView(APIView):
     def get(self, request, pk, *args, **kwargs):
         ret = ResponseDict()
         try:
-            degree = models.DegreeCourse.objects.filter(id=pk).first()
+            course = models.Course.objects.filter(id=pk, degree_course__isnull=True).first()
             degree_new = serializers.DegreeCourseDetailSerializer(degree)
             ret.data = degree_new.data
         except Exception as e:
@@ -60,7 +60,7 @@ class CourseDetailView(APIView):
     def get(self, request, pk, *args, **kwargs):
         ret = ResponseDict()
         try:
-            course = models.Course.objects.filter(id=pk).first()
+            course = models.Course.objects.filter(id=pk,degree_course__isnull=True).first()
             course_new = serializers.CourseDetailSerializer(course)
             ret.data = course_new.data
         except Exception as e:
